@@ -1,6 +1,6 @@
-package main;
+package ru.mtsbank.main;
 
-import prod.Product;
+import ru.mtsbank.prod.Product;
 
 public class Main {
     public static void main(String[] args) {

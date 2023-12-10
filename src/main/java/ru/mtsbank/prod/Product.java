@@ -1,4 +1,4 @@
-package prod;
+package ru.mtsbank.prod;
 
 /**
  * Класс, содержащий 3 параметра, для ДЗ-1
