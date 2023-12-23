@@ -1,5 +1,7 @@
 package ru.mtsbank.animals;
 
+import java.time.format.DateTimeFormatter;
+
 public class Shark extends Predator {
     public Shark(String breed, String name, String character) {
         super(breed, name, character);
@@ -22,6 +24,6 @@ public class Shark extends Predator {
 
     @Override
     public String toString() {
-        return "Shark: breed = " + breed + ", name = " + name + ", character = " + character + ", cost = " + cost;
+        return "Shark: " + breed + ", " + name + ", " + character + ", " + getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 }

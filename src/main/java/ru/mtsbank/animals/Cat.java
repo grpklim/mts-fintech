@@ -1,6 +1,7 @@
 package ru.mtsbank.animals;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 
 public class Cat extends Pet {
     public Cat(String breed, String name, String character, BigDecimal cost) {
@@ -29,6 +30,7 @@ public class Cat extends Pet {
 
     @Override
     public String toString() {
-        return "Cat: breed = " + breed + ", name = " + name + ", character = " + character + ", cost = " + cost;
+        return "Cat: " + breed + ", " + name + ", " + character + ", " + cost + ", "
+                + getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 }
