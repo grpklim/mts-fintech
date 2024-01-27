@@ -29,18 +29,21 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public void findDuplicate(Animal[] animals) {
+    public Animal[] findDuplicate(Animal[] animals) {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
+        List<Animal> list = new ArrayList<>();
         int count = 0;
         System.out.println("Дубликаты:");
         Set<Animal> set = new HashSet<>();
         for (Animal animal : animals)
             if (!set.add(animal)) {
                 System.out.println(animal);
+                list.add(animal);
                 count++;
             }
         if (count == 0)
             System.out.println("Без дубликатов");
+        return list.toArray(new Animal[list.size()]);
     }
 }

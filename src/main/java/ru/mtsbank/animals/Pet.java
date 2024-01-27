@@ -18,11 +18,11 @@ public abstract class Pet extends AbstractAnimal {
             return false;
         Pet pet = (Pet) o;
         return breed.equals(pet.breed) && name.equals(pet.name) && character.equals(pet.character) &&
-                cost.equals(pet.cost) && birthDate.equals(pet.birthDate);
+                cost.equals(pet.cost) /*&& birthDate.equals(pet.birthDate)*/;
     }
 
     @Override
     public int hashCode() {
-        return breed.hashCode() + name.hashCode() + character.hashCode() + cost.hashCode() + birthDate.hashCode();
+        return breed.hashCode() + name.hashCode() + character.hashCode() + cost.hashCode() /*+ birthDate.hashCode()*/;
     }
 }

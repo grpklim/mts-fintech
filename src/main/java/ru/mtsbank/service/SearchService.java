@@ -23,5 +23,5 @@ public interface SearchService {
      *
      * @param animals - массив животных, в котором ищутся дупликаты
      */
-    void findDuplicate(Animal[] animals);
+    Animal[] findDuplicate(Animal[] animals);
 }
