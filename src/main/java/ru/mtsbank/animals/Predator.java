@@ -23,12 +23,12 @@ public abstract class Predator extends AbstractAnimal {
         if (o == null || getClass() != o.getClass())
             return false;
         Predator predator = (Predator) o;
-        return breed.equals(predator.breed) && name.equals(predator.name) && character.equals(predator.character)
-                && birthDate.equals(predator.birthDate);
+        return breed.equals(predator.breed) && name.equals(predator.name) && character.equals(predator.character);
+//                && birthDate.equals(predator.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return breed.hashCode() + name.hashCode() + character.hashCode() + birthDate.hashCode();
+        return breed.hashCode() + name.hashCode() + character.hashCode() /*+ birthDate.hashCode()*/;
     }
 }
