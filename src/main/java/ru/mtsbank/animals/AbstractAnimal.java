@@ -19,4 +19,8 @@ public abstract class AbstractAnimal implements Animal {
     public LocalDate getBirthDay() {
         return birthDate;
     }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 }

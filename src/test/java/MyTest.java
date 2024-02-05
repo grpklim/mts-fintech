@@ -1,11 +1,10 @@
-package ru.mtsbank.animals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import ru.mtsbank.animals.*;
 import ru.mtsbank.service.AnimalsRepositoryImpl;
 
 import java.math.BigDecimal;
@@ -26,10 +25,10 @@ public class MyTest {
         dog = new Dog("Порода", "Собака", "Характер", new BigDecimal("0"));
         shark = new Shark("Порода", "Акула", "Характер");
         wolf = new Wolf("Порода", "Волк", "Характер");
-        cat.birthDate = LocalDate.now();
-        dog.birthDate = LocalDate.parse("2022-01-01");
-        shark.birthDate = LocalDate.parse("2016-01-01");
-        wolf.birthDate = LocalDate.parse("2009-01-01");
+        cat.setBirthDate(LocalDate.now());
+        dog.setBirthDate(LocalDate.parse("2022-01-01"));
+        shark.setBirthDate(LocalDate.parse("2016-01-01"));
+        wolf.setBirthDate(LocalDate.parse("2009-01-01"));
         ari.setAnimals(new Animal[]{cat, dog, shark, wolf});
     }
 
