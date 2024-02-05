@@ -15,6 +15,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return animals;
     }
 
+    public void setAnimals(Animal[] animals) {
+        this.animals = animals;
+    }
+
     @PostConstruct
     public void init() {
         animals = new Animal[10];
@@ -43,18 +47,21 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public void findDuplicate() {
+    public Set<Animal> findDuplicate() {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
         int count = 0;
         System.out.println("Дубликаты:");
         Set<Animal> set = new HashSet<>();
+        Set<Animal> result = new HashSet<>();
         for (Animal animal : animals)
             if (!set.add(animal)) {
                 System.out.println(animal);
+                result.add(animal);
                 count++;
             }
         if (count == 0)
             System.out.println("Без дубликатов");
+        return result;
     }
 }
