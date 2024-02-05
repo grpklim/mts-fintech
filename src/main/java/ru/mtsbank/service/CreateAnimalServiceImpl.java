@@ -9,8 +9,9 @@ import java.util.Random;
 @Service
 @Scope(value = "prototype")
 public class CreateAnimalServiceImpl implements CreateAnimalService {
-    @TempAnnoAnimalType
     protected AnimalType type;
+
+    AnimalFactory animalFactory = new AnimalFactory();
 
     public Animal create() {
         return animalFactory.createAnimal(type, new Random().nextInt(10));

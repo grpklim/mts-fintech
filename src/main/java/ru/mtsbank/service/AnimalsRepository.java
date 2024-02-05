@@ -8,4 +8,6 @@ public interface AnimalsRepository {
     Animal[] findOlderAnimal(int N);
 
     void findDuplicate();
+
+    Animal[] getAnimals();
 }

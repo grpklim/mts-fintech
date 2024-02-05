@@ -9,8 +9,8 @@ import ru.mtsbank.service.*;
 public class Main {
     public static void main(String[] args) {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class)) {
-            CreateAnimalServiceImpl casi = context.getBean(CreateAnimalServiceImpl.class);
-            AnimalsRepositoryImpl ari = context.getBean(AnimalsRepositoryImpl.class);
+            CreateAnimalService casi = context.getBean(CreateAnimalServiceImpl.class);
+            AnimalsRepository ari = context.getBean(AnimalsRepositoryImpl.class);
             Animal[] animals = ari.getAnimals();
             for (int i = 0; i < 10; i++) {
                 animals[i] = casi.create();
