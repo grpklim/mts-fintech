@@ -1,3 +1,5 @@
+package ru.mtsbank.service;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -5,13 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.mtsbank.animals.*;
-import ru.mtsbank.service.AnimalsRepositoryImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-public class MyTest {
+public class TestRepository {
     private static AnimalsRepositoryImpl ari;
     private static Cat cat;
     private static Dog dog;
