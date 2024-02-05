@@ -1,13 +1,27 @@
 package ru.mtsbank.service;
 
+import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.*;
 
-public class SearchServiceImpl implements SearchService {
+@Repository
+public class AnimalsRepositoryImpl implements AnimalsRepository {
+    private Animal[] animals;
+
+    public Animal[] getAnimals() {
+        return animals;
+    }
+
+    @PostConstruct
+    public void init() {
+        animals = new Animal[10];
+    }
+
     @Override
-    public String[] findLeapYearNames(Animal[] animals) {
+    public String[] findLeapYearNames() {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
         List<String> list = new ArrayList<>();
@@ -18,7 +32,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Animal[] findOlderAnimal(Animal[] animals, int N) {
+    public Animal[] findOlderAnimal(int N) {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
         List<Animal> list = new ArrayList<>();
@@ -29,7 +43,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public void findDuplicate(Animal[] animals) {
+    public void findDuplicate() {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
         int count = 0;

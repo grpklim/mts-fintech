@@ -1,21 +1,28 @@
 package ru.mtsbank.main;
 
+import org.springframework.context.annotation.*;
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.service.*;
 
+@Configuration
+@ComponentScan("ru")
 public class Main {
     public static void main(String[] args) {
-        CreateAnimalServiceImpl casi = new CreateAnimalServiceImpl();
-        SearchServiceImpl ssi = new SearchServiceImpl();
-        Animal[] arr = casi.createAnimal(12);
-        String[] sarr = ssi.findLeapYearNames(arr);
-        for (String x : sarr)
-            System.out.println(x);
-        System.out.println();
-        Animal[] aarr = ssi.findOlderAnimal(arr, 34);
-        for (Animal x : aarr)
-            System.out.println(x);
-        System.out.println();
-        ssi.findDuplicate(arr);
+        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class)) {
+            CreateAnimalServiceImpl casi = context.getBean(CreateAnimalServiceImpl.class);
+            AnimalsRepositoryImpl ari = context.getBean(AnimalsRepositoryImpl.class);
+            Animal[] animals = ari.getAnimals();
+            for (int i = 0; i < 10; i++) {
+                animals[i] = casi.create();
+                casi = context.getBean(CreateAnimalServiceImpl.class);
+            }
+            for (String name : ari.findLeapYearNames())
+                System.out.println(name);
+            System.out.println("-----------");
+            for (Animal animal : ari.findOlderAnimal(34))
+                System.out.println(animal);
+            System.out.println("-----------");
+            ari.findDuplicate();
+        }
     }
 }
