@@ -1,5 +1,6 @@
 package ru.mtsbank.service;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 
@@ -19,9 +20,16 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         this.animals = animals;
     }
 
+    @Lookup
+    public CreateAnimalService getCreateAnimalService() {
+        return null;
+    }
+
     @PostConstruct
     public void init() {
         animals = new Animal[10];
+        for (int i = 0; i < 10; i++)
+            animals[i] = getCreateAnimalService().create();
     }
 
     @Override
