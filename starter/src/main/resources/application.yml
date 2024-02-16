@@ -1,0 +1,6 @@
+starter:
+  names:
+    catNames: catName1, catName2, catName3
+    dogNames: dogName1, dogName2, dogName3
+    sharkNames: sharkName1, sharkName2, sharkName3
+    wolfNames: wolfName1, wolfName2, wolfName3

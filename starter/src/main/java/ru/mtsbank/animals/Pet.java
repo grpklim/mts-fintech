@@ -1,6 +1,7 @@
 package ru.mtsbank.animals;
 
-import java.math.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public abstract class Pet extends AbstractAnimal {
     public Pet(String breed, String name, String character, BigDecimal cost) {

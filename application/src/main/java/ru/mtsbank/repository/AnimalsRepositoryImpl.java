@@ -1,12 +1,16 @@
-package ru.mtsbank.service;
+package ru.mtsbank.repository;
 
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
+import ru.mtsbank.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
@@ -58,18 +62,22 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public Set<Animal> findDuplicate() {
         if (animals.length == 0)
             throw new RuntimeException("Пустой массив");
-        int count = 0;
-        System.out.println("Дубликаты:");
         Set<Animal> set = new HashSet<>();
         Set<Animal> result = new HashSet<>();
         for (Animal animal : animals)
-            if (!set.add(animal)) {
-                System.out.println(animal);
+            if (!set.add(animal))
                 result.add(animal);
-                count++;
-            }
-        if (count == 0)
-            System.out.println("Без дубликатов");
         return result;
+    }
+
+    @Override
+    public void printDuplicate() {
+        Set<Animal> animalSet = findDuplicate();
+        if (animalSet.isEmpty()) {
+            System.out.println("Без дубликатов");
+            return;
+        }
+        for (Animal animal : animalSet)
+            System.out.println(animal);
     }
 }

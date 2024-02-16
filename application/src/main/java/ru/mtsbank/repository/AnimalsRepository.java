@@ -1,4 +1,4 @@
-package ru.mtsbank.service;
+package ru.mtsbank.repository;
 
 import ru.mtsbank.animals.Animal;
 
@@ -12,4 +12,6 @@ public interface AnimalsRepository {
     Set<Animal> findDuplicate();
 
     Animal[] getAnimals();
+
+    void printDuplicate();
 }

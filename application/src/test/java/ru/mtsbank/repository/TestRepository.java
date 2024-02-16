@@ -1,4 +1,4 @@
-package ru.mtsbank.service;
+package ru.mtsbank.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
