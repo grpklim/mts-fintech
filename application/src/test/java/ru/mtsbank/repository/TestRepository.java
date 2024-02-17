@@ -1,19 +1,20 @@
 package ru.mtsbank.repository;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.mtsbank.animals.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
+@SpringBootTest
 public class TestRepository {
-    private static AnimalsRepositoryImpl ari;
+    @Autowired
+    private AnimalsRepositoryImpl ari;
     private static Cat cat;
     private static Dog dog;
     private static Shark shark;
@@ -21,7 +22,6 @@ public class TestRepository {
 
     @BeforeAll
     public static void beforeAll() {
-        ari = new AnimalsRepositoryImpl();
         cat = new Cat("Порода", "Кошка", "Характер", new BigDecimal("0"));
         dog = new Dog("Порода", "Собака", "Характер", new BigDecimal("0"));
         shark = new Shark("Порода", "Акула", "Характер");
@@ -30,6 +30,10 @@ public class TestRepository {
         dog.setBirthDate(LocalDate.parse("2022-01-01"));
         shark.setBirthDate(LocalDate.parse("2016-01-01"));
         wolf.setBirthDate(LocalDate.parse("2009-01-01"));
+    }
+
+    @BeforeEach
+    public void beforeEach() {
         ari.setAnimals(new Animal[]{cat, dog, shark, wolf});
     }
 
