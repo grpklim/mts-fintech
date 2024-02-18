@@ -3,7 +3,6 @@ package ru.mtsbank.service;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ru.mtsbank.animals.Animal;
-import ru.mtsbank.config.StarterProperties;
 
 import java.util.Random;
 

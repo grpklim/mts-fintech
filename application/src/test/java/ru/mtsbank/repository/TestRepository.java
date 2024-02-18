@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import ru.mtsbank.animals.*;
 
 import java.math.BigDecimal;
@@ -13,6 +15,14 @@ import java.util.HashSet;
 
 @SpringBootTest
 public class TestRepository {
+    @TestConfiguration
+    private static class TestRepositoryConfig {
+        @Bean
+        public AnimalsRepositoryImpl animalsRepository() {
+            return new AnimalsRepositoryImpl();
+        }
+    }
+
     @Autowired
     private AnimalsRepositoryImpl ari;
     private static Cat cat;
