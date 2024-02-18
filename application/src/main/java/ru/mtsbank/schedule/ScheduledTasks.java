@@ -1,6 +1,8 @@
 package ru.mtsbank.schedule;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mtsbank.animals.Animal;
@@ -9,7 +11,7 @@ import ru.mtsbank.repository.AnimalsRepository;
 @Component
 public class ScheduledTasks {
     @Autowired
-    AnimalsRepository ar;
+    private AnimalsRepository ar;
 
     @Scheduled(fixedRate = 60000)
     public void callAnimalsRepository() {

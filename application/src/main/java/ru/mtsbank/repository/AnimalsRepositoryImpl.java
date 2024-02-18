@@ -1,16 +1,15 @@
 package ru.mtsbank.repository;
 
 import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
+import ru.mtsbank.service.AnimalType;
 import ru.mtsbank.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
@@ -33,7 +32,19 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public void init() {
         animals = new Animal[10];
         for (int i = 0; i < 10; i++)
-            animals[i] = getCreateAnimalService().create();
+            animals[i] = getCreateAnimalService().create(getType());
+    }
+
+    private AnimalType getType() {
+        AnimalType type;
+        int i = new Random().nextInt(4);
+        switch (i) {
+            case 0 -> type = AnimalType.CAT;
+            case 1 -> type = AnimalType.DOG;
+            case 2 -> type = AnimalType.SHARK;
+            default -> type = AnimalType.WOLF;
+        }
+        return type;
     }
 
     @Override
