@@ -1,8 +1,6 @@
 package ru.mtsbank.repository;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -11,7 +9,10 @@ import ru.mtsbank.animals.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class TestRepository {
@@ -44,29 +45,35 @@ public class TestRepository {
 
     @BeforeEach
     public void beforeEach() {
-        ari.setAnimals(new Animal[]{cat, dog, shark, wolf});
+        Map<String, List<Animal>> animals = new HashMap<>();
+        animals.put("CAT", new ArrayList<>(List.of(cat)));
+        animals.put("DOG", new ArrayList<>(List.of(dog)));
+        animals.put("SHARK", new ArrayList<>(List.of(shark)));
+        animals.put("WOLF", new ArrayList<>(List.of(wolf)));
+        ari.setAnimals(animals);
     }
 
     @DisplayName("тестируем метод findLeapYearNames()")
     @Test
     public void findLeapYearNamesTest() {
-        Assertions.assertArrayEquals(ari.findLeapYearNames(), new String[]{"Кошка", "Акула"});
+        Map<String, LocalDate> map = new HashMap<>();
+        map.put("CAT Кошка", cat.getBirthDay());
+        map.put("SHARK Акула", shark.getBirthDay());
+        Assertions.assertEquals(ari.findLeapYearNames(), map);
     }
 
-    @ParameterizedTest(name = "тест со значением N = {arguments}")
-    @ValueSource(ints = {1, 5, 10})
     @DisplayName("тестируем метод findOlderAnimal()")
-    public void findOlderAnimalTest(int N) {
-        switch (N) {
-            case 1 -> Assertions.assertArrayEquals(ari.findOlderAnimal(N), new Animal[]{dog, shark, wolf});
-            case 5 -> Assertions.assertArrayEquals(ari.findOlderAnimal(N), new Animal[]{shark, wolf});
-            case 10 -> Assertions.assertArrayEquals(ari.findOlderAnimal(N), new Animal[]{wolf});
-        }
+    @Test
+    public void findOlderAnimalTest() {
+        Map<Animal, Integer> map = new HashMap<>();
+        map.put(shark, 8);
+        map.put(wolf, 15);
+        Assertions.assertEquals(ari.findOlderAnimal(5), map);
     }
 
     @DisplayName("тестируем метод findDuplicate()")
     @Test
     public void findDuplicateTest1() {
-        Assertions.assertEquals(ari.findDuplicate(), new HashSet<>());
+        Assertions.assertEquals(ari.findDuplicate(), new HashMap<>());
     }
 }
