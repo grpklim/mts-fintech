@@ -1,10 +1,8 @@
 package ru.mtsbank.repository;
 
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
-import ru.mtsbank.service.AnimalType;
 import ru.mtsbank.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
@@ -13,13 +11,13 @@ import java.util.*;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
-    private Animal[] animals;
+    private Map<String, List<Animal>> animals;
 
-    public Animal[] getAnimals() {
+    public Map<String, List<Animal>> getAnimals() {
         return animals;
     }
 
-    public void setAnimals(Animal[] animals) {
+    public void setAnimals(Map<String, List<Animal>> animals) {
         this.animals = animals;
     }
 
@@ -30,65 +28,68 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @PostConstruct
     public void init() {
-        animals = new Animal[10];
-        for (int i = 0; i < 10; i++)
-            animals[i] = getCreateAnimalService().create(getType());
+        animals = getCreateAnimalService().create();
     }
 
-    private AnimalType getType() {
-        AnimalType type;
-        int i = new Random().nextInt(4);
-        switch (i) {
-            case 0 -> type = AnimalType.CAT;
-            case 1 -> type = AnimalType.DOG;
-            case 2 -> type = AnimalType.SHARK;
-            default -> type = AnimalType.WOLF;
+    @Override
+    public Map<String, LocalDate> findLeapYearNames() {
+        Map<String, LocalDate> result = new HashMap<>();
+        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
+            String str = entry.getKey();
+            List<Animal> list = entry.getValue();
+            for (Animal animal : list)
+                if (animal.getBirthDay().isLeapYear())
+                    result.put(str + " " + animal.getName(), animal.getBirthDay());
         }
-        return type;
+        return result;
     }
 
     @Override
-    public String[] findLeapYearNames() {
-        if (animals.length == 0)
-            throw new RuntimeException("Пустой массив");
-        List<String> list = new ArrayList<>();
-        for (Animal animal : animals)
-            if (animal.getBirthDay().isLeapYear())
-                list.add(animal.getName());
-        return list.toArray(new String[list.size()]);
+    public Map<Animal, Integer> findOlderAnimal(int n) {
+        Map<Animal, Integer> result = new HashMap<>();
+        int maxAge = 0;
+        Animal maxAnimal = null;
+        for (List<Animal> list : animals.values())
+            for (Animal animal : list) {
+                int age = LocalDate.now().getYear() - animal.getBirthDay().getYear();
+                if (age > maxAge) {
+                    maxAge = age;
+                    maxAnimal = animal;
+                }
+                if (age > n)
+                    result.put(animal, age);
+            }
+        if (result.isEmpty()) {
+            System.out.println("Животные старше n лет отсутствуют; старшее животное:");
+            result.put(maxAnimal, maxAge);
+        }
+        return result;
     }
 
     @Override
-    public Animal[] findOlderAnimal(int N) {
-        if (animals.length == 0)
-            throw new RuntimeException("Пустой массив");
-        List<Animal> list = new ArrayList<>();
-        for (Animal animal : animals)
-            if (LocalDate.now().getYear() - animal.getBirthDay().getYear() > N)
-                list.add(animal);
-        return list.toArray(new Animal[list.size()]);
-    }
-
-    @Override
-    public Set<Animal> findDuplicate() {
-        if (animals.length == 0)
-            throw new RuntimeException("Пустой массив");
+    public Map<String, Integer> findDuplicate() {
+        Map<String, Integer> result = new HashMap<>();
         Set<Animal> set = new HashSet<>();
-        Set<Animal> result = new HashSet<>();
-        for (Animal animal : animals)
-            if (!set.add(animal))
-                result.add(animal);
+        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
+            String str = entry.getKey();
+            List<Animal> list = entry.getValue();
+            for (Animal animal : list)
+                if (!set.add(animal))
+                    if (!result.containsKey(str))
+                        result.put(str, 1);
+                    else
+                        result.put(str, result.get(str) + 1);
+        }
         return result;
     }
 
     @Override
     public void printDuplicate() {
-        Set<Animal> animalSet = findDuplicate();
-        if (animalSet.isEmpty()) {
-            System.out.println("Без дубликатов");
+        Map<String, Integer> map = findDuplicate();
+        if (map.isEmpty()) {
+            System.out.println("Дубликаты отсутствуют");
             return;
         }
-        for (Animal animal : animalSet)
-            System.out.println(animal);
+        System.out.println(map);
     }
 }
