@@ -17,8 +17,8 @@ public class ScheduledTasks {
     @Scheduled(fixedRate = 60000)
     public void callAnimalsRepository() {
         Map<String, LocalDate> map1 = ar.findLeapYearNames();
-        for (String str : map1.keySet())
-            System.out.println(str + " " + map1.get(str));
+        for (Map.Entry<String, LocalDate> entry : map1.entrySet())
+            System.out.println(entry.getKey() + " " + entry.getValue());
         System.out.println("-----------");
         Map<Animal, Integer> map2 = ar.findOlderAnimal(34);
         for (Animal animal : map2.keySet())
