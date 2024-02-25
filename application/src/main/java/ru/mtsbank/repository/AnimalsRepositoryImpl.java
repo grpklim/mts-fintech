@@ -34,8 +34,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public Map<String, LocalDate> findLeapYearNames() {
         Map<String, LocalDate> result = new HashMap<>();
-        for (String str : animals.keySet()) {
-            List<Animal> list = animals.get(str);
+        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
+            String str = entry.getKey();
+            List<Animal> list = entry.getValue();
             for (Animal animal : list)
                 if (animal.getBirthDay().isLeapYear())
                     result.put(str + " " + animal.getName(), animal.getBirthDay());
@@ -69,8 +70,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public Map<String, Integer> findDuplicate() {
         Map<String, Integer> result = new HashMap<>();
         Set<Animal> set = new HashSet<>();
-        for (String str : animals.keySet()) {
-            List<Animal> list = animals.get(str);
+        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
+            String str = entry.getKey();
+            List<Animal> list = entry.getValue();
             for (Animal animal : list)
                 if (!set.add(animal))
                     if (!result.containsKey(str))
