@@ -9,10 +9,7 @@ import ru.mtsbank.animals.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 public class TestRepository {
@@ -30,17 +27,19 @@ public class TestRepository {
     private static Dog dog;
     private static Shark shark;
     private static Wolf wolf;
+    private static List<Animal> list;
 
     @BeforeAll
     public static void beforeAll() {
         cat = new Cat("Порода", "Кошка", "Характер", new BigDecimal("0"));
-        dog = new Dog("Порода", "Собака", "Характер", new BigDecimal("0"));
+        dog = new Dog("Порода", "Собака", "Характер", new BigDecimal("1"));
         shark = new Shark("Порода", "Акула", "Характер");
         wolf = new Wolf("Порода", "Волк", "Характер");
         cat.setBirthDate(LocalDate.now());
-        dog.setBirthDate(LocalDate.parse("2022-01-01"));
+        dog.setBirthDate(LocalDate.parse("2017-01-01"));
         shark.setBirthDate(LocalDate.parse("2016-01-01"));
         wolf.setBirthDate(LocalDate.parse("2009-01-01"));
+        list = List.of(cat, dog, shark, wolf);
     }
 
     @BeforeEach
@@ -68,12 +67,30 @@ public class TestRepository {
         Map<Animal, Integer> map = new HashMap<>();
         map.put(shark, 8);
         map.put(wolf, 15);
-        Assertions.assertEquals(ari.findOlderAnimal(5), map);
+        Assertions.assertEquals(ari.findOlderAnimal(7), map);
     }
 
     @DisplayName("тестируем метод findDuplicate()")
     @Test
-    public void findDuplicateTest1() {
+    public void findDuplicateTest() {
         Assertions.assertEquals(ari.findDuplicate(), new HashMap<>());
+    }
+
+    @DisplayName("тестируем метод findAverageAge()")
+    @Test
+    public void findAverageAgeTest() {
+        Assertions.assertEquals(ari.findAverageAge(list), 7.5);
+    }
+
+    @DisplayName("тестируем метод findOldAndExpensive()")
+    @Test
+    public void findOldAndExpensiveTest() {
+        Assertions.assertEquals(ari.findOldAndExpensive(list), List.of(dog));
+    }
+
+    @DisplayName("тестируем метод findMinConstAnimals()")
+    @Test
+    public void findMinConstAnimalsTest() {
+        Assertions.assertEquals(ari.findMinConstAnimals(list), List.of("Собака", "Кошка"));
     }
 }

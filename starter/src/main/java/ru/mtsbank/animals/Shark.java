@@ -26,4 +26,9 @@ public class Shark extends Predator {
     public String toString() {
         return "Shark: " + breed + ", " + name + ", " + character + ", " + getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
+    @Override
+    public String getType() {
+        return "SHARK";
+    }
 }

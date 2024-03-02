@@ -23,4 +23,9 @@ public abstract class AbstractAnimal implements Animal {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
+
+    @Override
+    public int getAge() {
+        return LocalDate.now().getYear() - birthDate.getYear();
+    }
 }

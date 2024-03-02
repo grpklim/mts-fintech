@@ -33,4 +33,9 @@ public class Cat extends Pet {
         return "Cat: " + breed + ", " + name + ", " + character + ", " + cost + ", "
                 + getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
+    @Override
+    public String getType() {
+        return "CAT";
+    }
 }

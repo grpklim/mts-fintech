@@ -26,4 +26,9 @@ public class Wolf extends Predator {
     public String toString() {
         return "Wolf: " + breed + ", " + name + ", " + character + ", " + getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
+    @Override
+    public String getType() {
+        return "WOLF";
+    }
 }

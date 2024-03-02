@@ -28,4 +28,8 @@ public interface Animal {
      * Возвращает день рождения животного
      */
     LocalDate getBirthDay();
+
+    String getType();
+
+    int getAge();
 }
