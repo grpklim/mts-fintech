@@ -58,7 +58,7 @@ public class TestRepository {
         Map<String, LocalDate> map = new HashMap<>();
         map.put("CAT Кошка", cat.getBirthDay());
         map.put("SHARK Акула", shark.getBirthDay());
-        Assertions.assertEquals(ari.findLeapYearNames(), map);
+        Assertions.assertEquals(map, ari.findLeapYearNames());
     }
 
     @DisplayName("тестируем метод findOlderAnimal()")
@@ -67,30 +67,30 @@ public class TestRepository {
         Map<Animal, Integer> map = new HashMap<>();
         map.put(shark, 8);
         map.put(wolf, 15);
-        Assertions.assertEquals(ari.findOlderAnimal(7), map);
+        Assertions.assertEquals(map, ari.findOlderAnimal(7));
     }
 
     @DisplayName("тестируем метод findDuplicate()")
     @Test
     public void findDuplicateTest() {
-        Assertions.assertEquals(ari.findDuplicate(), new HashMap<>());
+        Assertions.assertEquals(new HashMap<>(), ari.findDuplicate());
     }
 
     @DisplayName("тестируем метод findAverageAge()")
     @Test
     public void findAverageAgeTest() {
-        Assertions.assertEquals(ari.findAverageAge(list), 7.5);
+        Assertions.assertEquals(7.5, ari.findAverageAge(list));
     }
 
     @DisplayName("тестируем метод findOldAndExpensive()")
     @Test
     public void findOldAndExpensiveTest() {
-        Assertions.assertEquals(ari.findOldAndExpensive(list), List.of(dog));
+        Assertions.assertEquals(List.of(dog), ari.findOldAndExpensive(list));
     }
 
     @DisplayName("тестируем метод findMinConstAnimals()")
     @Test
     public void findMinConstAnimalsTest() {
-        Assertions.assertEquals(ari.findMinConstAnimals(list), List.of("Собака", "Кошка"));
+        Assertions.assertEquals(List.of("Собака", "Кошка"), ari.findMinConstAnimals(list));
     }
 }

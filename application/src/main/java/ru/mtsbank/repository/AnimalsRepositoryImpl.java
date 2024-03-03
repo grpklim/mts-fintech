@@ -35,9 +35,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public Map<String, LocalDate> findLeapYearNames() {
         Map<String, LocalDate> result = new HashMap<>();
-        for (Map.Entry<String, List<Animal>> entry : animals.entrySet())
-            entry.getValue().stream().filter(animal -> animal.getBirthDay().isLeapYear())
-                    .forEach(animal -> result.put(entry.getKey() + " " + animal.getName(), animal.getBirthDay()));
+        animals.values().stream().flatMap(Collection::stream).filter(animal -> animal.getBirthDay().isLeapYear())
+                .forEach(animal -> result.put(animal.getType() + " " + animal.getName(), animal.getBirthDay()));
         return result;
     }
 
@@ -48,10 +47,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .forEach(animal -> result.put(animal, animal.getAge()));
         if (result.isEmpty()) {
             System.out.println("Животные старше n лет отсутствуют; старшее животное:");
-            int maxAge = animals.values().stream().flatMap(Collection::stream).mapToInt(Animal::getAge).max().getAsInt();
-            Animal maxAnimal = animals.values().stream().flatMap(Collection::stream)
-                    .filter(animal -> animal.getAge() == maxAge).findFirst().get();
-            result.put(maxAnimal, maxAge);
+            animals.values().stream().flatMap(Collection::stream)
+                    .sorted((a1, a2) -> Integer.compare(a2.getAge(), a1.getAge())).limit(1)
+                    .forEach(animal -> result.put(animal, animal.getAge()));
         }
         return result;
     }
