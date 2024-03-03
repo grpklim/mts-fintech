@@ -3,14 +3,20 @@ package ru.mtsbank.repository;
 import ru.mtsbank.animals.Animal;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.*;
 
 public interface AnimalsRepository {
     Map<String, LocalDate> findLeapYearNames();
 
     Map<Animal, Integer> findOlderAnimal(int n);
 
-    Map<String, Integer> findDuplicate();
+    Map<String, List<Animal>> findDuplicate();
 
     void printDuplicate();
+
+    double findAverageAge(List<Animal> list);
+
+    List<Animal> findOldAndExpensive(List<Animal> list);
+
+    List<String> findMinConstAnimals(List<Animal> list);
 }

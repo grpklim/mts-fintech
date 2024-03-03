@@ -26,8 +26,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     private AnimalType getType() {
         AnimalType type = null;
-        int i = new Random().nextInt(4);
-        switch (i) {
+        switch (new Random().nextInt(4)) {
             case 0 -> type = AnimalType.CAT;
             case 1 -> type = AnimalType.DOG;
             case 2 -> type = AnimalType.SHARK;
