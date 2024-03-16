@@ -2,7 +2,10 @@ package ru.mtsbank.repository;
 
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
-import ru.mtsbank.animals.*;
+import ru.mtsbank.animals.Animal;
+import ru.mtsbank.animals.Pet;
+import ru.mtsbank.exception.CustomException;
+import ru.mtsbank.exception.CustomIllegalArgumentException;
 import ru.mtsbank.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
@@ -41,7 +44,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Map<Animal, Integer> findOlderAnimal(int n) {
+    public Map<Animal, Integer> findOlderAnimal(int n){
+        if (n <= 0)
+            throw new CustomIllegalArgumentException("n должен быть > 0");
         Map<Animal, Integer> result = new HashMap<>();
         animals.values().stream().flatMap(Collection::stream).filter(animal -> animal.getAge() > n)
                 .forEach(animal -> result.put(animal, animal.getAge()));
@@ -73,20 +78,26 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public double findAverageAge(List<Animal> list) {
+        if (list.isEmpty())
+            throw new CustomIllegalArgumentException("Пустой list");
         return list.stream().mapToInt(Animal::getAge).average().getAsDouble();
     }
 
     @Override
     public List<Animal> findOldAndExpensive(List<Animal> list) {
-        List<Animal> pets = list.stream().filter(animal -> animal instanceof Cat || animal instanceof Dog).toList();
+        if (list.isEmpty())
+            throw new CustomIllegalArgumentException("Пустой list");
+        List<Animal> pets = list.stream().filter(animal -> animal instanceof Pet).toList();
         double avCost = pets.stream().mapToDouble(animal -> animal.getCost().doubleValue()).average().getAsDouble();
         return pets.stream().filter(animal -> (animal.getAge() > 5) && (animal.getCost().doubleValue() > avCost))
                 .sorted(Comparator.comparing(Animal::getBirthDay)).toList();
     }
 
     @Override
-    public List<String> findMinConstAnimals(List<Animal> list) {
-        List<Animal> pets = list.stream().filter(animal -> animal instanceof Cat || animal instanceof Dog).toList();
+    public List<String> findMinConstAnimals(List<Animal> list) throws CustomException {
+        if(list.isEmpty())
+            throw new CustomException("Пустой list");
+        List<Animal> pets = list.stream().filter(animal -> animal instanceof Pet).toList();
         return pets.stream().sorted(Comparator.comparing(Animal::getCost)).limit(3)
                 .sorted((a1, a2) -> a2.getName().compareTo(a1.getName())).map(Animal::getName).toList();
     }

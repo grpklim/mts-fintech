@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import ru.mtsbank.animals.*;
+import ru.mtsbank.exception.CustomException;
+import ru.mtsbank.exception.CustomIllegalArgumentException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -70,6 +72,12 @@ public class TestRepository {
         Assertions.assertEquals(map, ari.findOlderAnimal(7));
     }
 
+    @DisplayName("тестируем метод findOlderAnimal() c исключением")
+    @Test
+    public void exceptionTest1() {
+        Assertions.assertThrows(CustomIllegalArgumentException.class, () -> ari.findOlderAnimal(-1));
+    }
+
     @DisplayName("тестируем метод findDuplicate()")
     @Test
     public void findDuplicateTest() {
@@ -90,7 +98,13 @@ public class TestRepository {
 
     @DisplayName("тестируем метод findMinConstAnimals()")
     @Test
-    public void findMinConstAnimalsTest() {
+    public void findMinConstAnimalsTest() throws CustomException {
         Assertions.assertEquals(List.of("Собака", "Кошка"), ari.findMinConstAnimals(list));
+    }
+
+    @DisplayName("тестируем метод findMinConstAnimals() c исключением")
+    @Test
+    public void exceptionTest2() {
+        Assertions.assertThrows(CustomException.class, () -> ari.findMinConstAnimals(new ArrayList<>()));
     }
 }
