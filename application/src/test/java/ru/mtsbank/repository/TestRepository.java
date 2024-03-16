@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import ru.mtsbank.animals.*;
-import ru.mtsbank.exception.CustomExecutionException;
+import ru.mtsbank.exception.CustomException;
 import ru.mtsbank.exception.CustomIllegalArgumentException;
 
 import java.math.BigDecimal;
@@ -98,13 +98,13 @@ public class TestRepository {
 
     @DisplayName("тестируем метод findMinConstAnimals()")
     @Test
-    public void findMinConstAnimalsTest() throws CustomExecutionException {
+    public void findMinConstAnimalsTest() throws CustomException {
         Assertions.assertEquals(List.of("Собака", "Кошка"), ari.findMinConstAnimals(list));
     }
 
     @DisplayName("тестируем метод findMinConstAnimals() c исключением")
     @Test
     public void exceptionTest2() {
-        Assertions.assertThrows(CustomExecutionException.class, () -> ari.findMinConstAnimals(new ArrayList<>()));
+        Assertions.assertThrows(CustomException.class, () -> ari.findMinConstAnimals(new ArrayList<>()));
     }
 }

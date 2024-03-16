@@ -1,7 +1,7 @@
 package ru.mtsbank.repository;
 
 import ru.mtsbank.animals.Animal;
-import ru.mtsbank.exception.CustomExecutionException;
+import ru.mtsbank.exception.CustomException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -19,5 +19,5 @@ public interface AnimalsRepository {
 
     List<Animal> findOldAndExpensive(List<Animal> list);
 
-    List<String> findMinConstAnimals(List<Animal> list) throws CustomExecutionException;
+    List<String> findMinConstAnimals(List<Animal> list) throws CustomException;
 }

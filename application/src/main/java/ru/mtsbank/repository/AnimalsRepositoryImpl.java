@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.animals.Pet;
-import ru.mtsbank.exception.CustomExecutionException;
+import ru.mtsbank.exception.CustomException;
 import ru.mtsbank.exception.CustomIllegalArgumentException;
 import ru.mtsbank.service.CreateAnimalService;
 
@@ -94,9 +94,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public List<String> findMinConstAnimals(List<Animal> list) throws CustomExecutionException {
+    public List<String> findMinConstAnimals(List<Animal> list) throws CustomException {
         if(list.isEmpty())
-            throw new CustomExecutionException("Пустой list");
+            throw new CustomException("Пустой list");
         List<Animal> pets = list.stream().filter(animal -> animal instanceof Pet).toList();
         return pets.stream().sorted(Comparator.comparing(Animal::getCost)).limit(3)
                 .sorted((a1, a2) -> a2.getName().compareTo(a1.getName())).map(Animal::getName).toList();

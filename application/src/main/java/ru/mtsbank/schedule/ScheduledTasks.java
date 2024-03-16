@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mtsbank.animals.Animal;
-import ru.mtsbank.exception.CustomExecutionException;
+import ru.mtsbank.exception.CustomException;
 import ru.mtsbank.exception.CustomIllegalArgumentException;
 import ru.mtsbank.repository.*;
 
@@ -43,7 +43,7 @@ public class ScheduledTasks {
         System.out.println("-----------");
         try {
             System.out.println(ar.findMinConstAnimals(list));
-        } catch (CustomExecutionException e) {
+        } catch (CustomException e) {
             System.out.println(e);
         }
         System.out.println();
