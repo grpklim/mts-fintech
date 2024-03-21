@@ -11,6 +11,7 @@ import ru.mtsbank.service.CreateAnimalService;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
@@ -37,7 +38,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public Map<String, LocalDate> findLeapYearNames() {
-        Map<String, LocalDate> result = new HashMap<>();
+        Map<String, LocalDate> result = new ConcurrentHashMap<>();
         animals.values().stream().flatMap(Collection::stream).filter(animal -> animal.getBirthDay().isLeapYear())
                 .forEach(animal -> result.put(animal.getType() + " " + animal.getName(), animal.getBirthDay()));
         return result;
@@ -47,7 +48,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public Map<Animal, Integer> findOlderAnimal(int n){
         if (n <= 0)
             throw new CustomIllegalArgumentException("n должен быть > 0");
-        Map<Animal, Integer> result = new HashMap<>();
+        Map<Animal, Integer> result = new ConcurrentHashMap<>();
         animals.values().stream().flatMap(Collection::stream).filter(animal -> animal.getAge() > n)
                 .forEach(animal -> result.put(animal, animal.getAge()));
         if (result.isEmpty()) {

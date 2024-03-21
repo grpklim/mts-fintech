@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.mtsbank.animals.Animal;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class CreateAnimalServiceImpl implements CreateAnimalService {
@@ -14,11 +16,11 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     public Map<String, List<Animal>> create() {
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         for (int i = 0; i < 10; i++) {
             AnimalType type = getType();
             if (!animals.containsKey(type.toString()))
-                animals.put(type.toString(), new ArrayList<>());
+                animals.put(type.toString(), new CopyOnWriteArrayList<>());
             animals.get(type.toString()).add(animalFactory.createAnimal(type, new Random().nextInt(10)));
         }
         return animals;
