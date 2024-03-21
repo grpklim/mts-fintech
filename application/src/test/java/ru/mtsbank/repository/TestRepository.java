@@ -12,6 +12,8 @@ import ru.mtsbank.exception.CustomIllegalArgumentException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @SpringBootTest
 public class TestRepository {
@@ -46,18 +48,18 @@ public class TestRepository {
 
     @BeforeEach
     public void beforeEach() {
-        Map<String, List<Animal>> animals = new HashMap<>();
-        animals.put("CAT", new ArrayList<>(List.of(cat)));
-        animals.put("DOG", new ArrayList<>(List.of(dog)));
-        animals.put("SHARK", new ArrayList<>(List.of(shark)));
-        animals.put("WOLF", new ArrayList<>(List.of(wolf)));
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
+        animals.put("CAT", new CopyOnWriteArrayList<>(List.of(cat)));
+        animals.put("DOG", new CopyOnWriteArrayList<>(List.of(dog)));
+        animals.put("SHARK", new CopyOnWriteArrayList<>(List.of(shark)));
+        animals.put("WOLF", new CopyOnWriteArrayList<>(List.of(wolf)));
         ari.setAnimals(animals);
     }
 
     @DisplayName("тестируем метод findLeapYearNames()")
     @Test
     public void findLeapYearNamesTest() {
-        Map<String, LocalDate> map = new HashMap<>();
+        Map<String, LocalDate> map = new ConcurrentHashMap<>();
         map.put("CAT Кошка", cat.getBirthDay());
         map.put("SHARK Акула", shark.getBirthDay());
         Assertions.assertEquals(map, ari.findLeapYearNames());
@@ -66,7 +68,7 @@ public class TestRepository {
     @DisplayName("тестируем метод findOlderAnimal()")
     @Test
     public void findOlderAnimalTest() {
-        Map<Animal, Integer> map = new HashMap<>();
+        Map<Animal, Integer> map = new ConcurrentHashMap<>();
         map.put(shark, 8);
         map.put(wolf, 15);
         Assertions.assertEquals(map, ari.findOlderAnimal(7));
