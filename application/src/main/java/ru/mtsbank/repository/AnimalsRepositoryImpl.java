@@ -45,7 +45,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Map<Animal, Integer> findOlderAnimal(int n){
+    public Map<Animal, Integer> findOlderAnimal(int n) {
         if (n <= 0)
             throw new CustomIllegalArgumentException("n должен быть > 0");
         Map<Animal, Integer> result = new ConcurrentHashMap<>();
@@ -71,10 +71,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public void printDuplicate() {
         Map<String, List<Animal>> map = findDuplicate();
         if (map.isEmpty()) {
-            System.out.println("Дубликаты отсутствуют");
+            System.out.println("\tДубликаты отсутствуют");
             return;
         }
-        System.out.println(map);
+        System.out.println("\t" + map);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public List<String> findMinConstAnimals(List<Animal> list) throws CustomException {
-        if(list.isEmpty())
+        if (list.isEmpty())
             throw new CustomException("Пустой list");
         List<Animal> pets = list.stream().filter(animal -> animal instanceof Pet).toList();
         return pets.stream().sorted(Comparator.comparing(Animal::getCost)).limit(3)
